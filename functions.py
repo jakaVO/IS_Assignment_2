@@ -7,17 +7,23 @@ import nltk
 nltk.download('punkt')
 import time
 
-def scrape_website_text(url):
+def scrape_website_text(url, target_class="primary-cli cli cli-text"):
     try:
         response = requests.get(url)
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, 'html.parser')
-            text_content = soup.get_text() # Extract all text content from the HTML
-            return text_content
+
+            # Find all elements with the specified class
+            target_elements = soup.find_all(class_=target_class)
+
+            # Extract text from the elements with the specified class
+            core_text = ' '.join(element.get_text() for element in target_elements)
+
+            return core_text
         else:
             print(f"Failed to retrieve, status: {response.status_code}")
     except Exception as e:
-        print(f"error : {e}")
+        print(f"Error: {e}")
 
 def tfidf_vectorizer(text):
     # Pripravimo korpus, kjer je vsak dokument v korpusu enak vstopnemu besedilu
@@ -36,15 +42,19 @@ def word2vec_vectorizer(text):
     return word_vectors
 
 
-# Primer 
+""" # Primer 
 start_time = time.time()
 website_url = "https://www.huffpost.com/entry/funniest-parenting-tweets_l_632d7d15e4b0d12b5403e479"
 text = scrape_website_text(website_url)
 if text:
+    print()
     print(text)
+    print()
 
 end_time = time.time()
 print("elapesed time: ", end_time-start_time)
+ """
+
 """
 tfidf_result = tfidf_vectorizer(text)
 print("TF-IDF Vector:", tfidf_result)
