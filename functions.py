@@ -5,6 +5,7 @@ from gensim.models import Word2Vec
 from nltk.tokenize import word_tokenize
 import nltk
 nltk.download('punkt')
+import time
 
 def scrape_website_text(url):
     try:
@@ -34,13 +35,17 @@ def word2vec_vectorizer(text):
     word_vectors = {word: model.wv[word].tolist() for word in tokenized_text} # Pridobimo vektorje besed (Rezultat je slovar, kjer so kljuci besede, vrednosti pa vektorji besed.)
     return word_vectors
 
-"""
+
 # Primer 
+start_time = time.time()
 website_url = "https://www.huffpost.com/entry/funniest-parenting-tweets_l_632d7d15e4b0d12b5403e479"
 text = scrape_website_text(website_url)
 if text:
     print(text)
 
+end_time = time.time()
+print("elapesed time: ", end_time-start_time)
+"""
 tfidf_result = tfidf_vectorizer(text)
 print("TF-IDF Vector:", tfidf_result)
 print()
