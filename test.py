@@ -120,11 +120,13 @@ for word, vector in word_vectors.items():
 # BERT
 
 # split into training and validation sets
-X_tr, X_val, y_tr, y_val = train_test_split(train.clean_text, train.label, test_size=0.25, random_state=42)
+# split into training and validation sets
+X_tr, X_val, y_tr, y_val = train_test_split(X_train['clean_text'], y_train, test_size=0.25, random_state=42)
 
-print('X_tr shape:',X_tr.shape)
+# Comment out the following line as it's not applicable to Series
+# print('X_tr shape:', X_tr.shape)
 
-# make a connection with the BERT server using it's ip address
+# make a connection with the BERT server using its IP address
 bc = BertClient(ip="SERVER_IP")
 # get the embedding for train and val sets
 X_tr_bert = bc.encode(X_tr.tolist())
