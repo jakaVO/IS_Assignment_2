@@ -5,7 +5,11 @@ import json
 
 file_path = 'News_Category_Dataset_IS_course.json'
 i = 0
-with open(file_path, 'r') as file:
+with open("text.json", "w"):
+    pass  # Using 'pass' as a no-operation statement
+
+
+with open(file_path, 'r') as file, open("text.json", "a") as json_file:
     for line in file:
         #parsamo json
         data = json.loads(line)
@@ -18,7 +22,7 @@ with open(file_path, 'r') as file:
         date = data.get('date')
         Scraped_text = scrape_website_text(link)
 
-        print()
+        """ print()
         print(f"Link: {link}")
         print(f"Headline: {headline}")
         print(f"Category: {category}")
@@ -27,7 +31,14 @@ with open(file_path, 'r') as file:
         print(f"Date: {date}")
         print("\n")
         print("Scraped_text: ", Scraped_text)
-        print()
+        print() """
         i += 1
-        if(i == 10):
+        text_json = {
+            "link": link,
+            "text": Scraped_text
+        }
+        json.dump(text_json, json_file)
+        json_file.write('\n')
+
+        if(i == 5000):
             break
