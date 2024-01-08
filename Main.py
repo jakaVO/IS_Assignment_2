@@ -1,6 +1,6 @@
-import math
-from functions import *
-import json
+# import math
+# from functions import *
+# import json
 
 
 file_path = 'News_Category_Dataset_IS_course.json'
@@ -14,13 +14,13 @@ with open(file_path, 'r') as file, open("text.json", "a") as json_file:
         #parsamo json
         data = json.loads(line)
               
-        link = data.get('link')
-        headline = data.get('headline')
-        category = data.get('category')
-        short_description = data.get('short_description')
-        authors = data.get('authors')
-        date = data.get('date')
-        Scraped_text = scrape_website_text(link)
+#         link = data.get('link')
+#         headline = data.get('headline')
+#         category = data.get('category')
+#         short_description = data.get('short_description')
+#         authors = data.get('authors')
+#         date = data.get('date')
+#         Scraped_text = scrape_website_text(link)
 
         """ print()
         print(f"Link: {link}")
