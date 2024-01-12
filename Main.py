@@ -1,44 +1,61 @@
 # import math
-# from functions import *
-# import json
+from functions import *
+import json
 
 
-file_path = 'News_Category_Dataset_IS_course.json'
-i = 0
-with open("text.json", "w"):
-    pass  # Using 'pass' as a no-operation statement
+#s tem dobis count kerih categoryjev je najmajn v unem vlkem jsonu. Rezultat: Category with Minimum Count: PARENTS, Count: 3955
+""" 
+category_counts = {}
 
+with open("News_Category_Dataset_IS_course.json", "r") as file:
 
-with open(file_path, 'r') as file, open("text.json", "a") as json_file:
     for line in file:
         #parsamo json
         data = json.loads(line)
-              
-#         link = data.get('link')
-#         headline = data.get('headline')
-#         category = data.get('category')
-#         short_description = data.get('short_description')
-#         authors = data.get('authors')
-#         date = data.get('date')
-#         Scraped_text = scrape_website_text(link)
+        category = data.get('category')
 
-        """ print()
-        print(f"Link: {link}")
-        print(f"Headline: {headline}")
-        print(f"Category: {category}")
-        print(f"Short Description: {short_description}")
-        print(f"Authors: {authors}")
-        print(f"Date: {date}")
-        print("\n")
-        print("Scraped_text: ", Scraped_text)
-        print() """
-        i += 1
-        text_json = {
+        
+        if category in category_counts:
+            category_counts[category] += 1
+        else:
+            category_counts[category] = 1    
+
+#for category, count in category_counts.items():
+#   print(f"Category: {category}, Count: {count}")
+
+print()
+min_category = min(category_counts, key=category_counts.get)
+min_count = category_counts[min_category]
+print(f"Category with Minimum Count: {min_category}, Count: {min_count}")
+print() """
+
+file_path = 'News_Category_Dataset_IS_course.json'
+i = 0
+
+with open(file_path, 'r') as file, open("text_50k.json", "w") as json_file:
+    category_counts1 = {}
+
+    for line in file:
+        #parsamo json
+        data = json.loads(line)
+        category = data.get('category')
+        if category in category_counts1:
+            category_counts1[category] += 1
+        else:
+            category_counts1[category] = 1
+
+        if(category_counts1[category] < 3955):
+            link = data.get('link')
+            Scraped_text = scrape_website_text(link)
+            text_json = {
             "link": link,
             "text": Scraped_text
-        }
-        json.dump(text_json, json_file)
-        json_file.write('\n')
-
-        if(i == 5000):
+            }
+            json.dump(text_json, json_file)
+            json_file.write('\n')
+        
+        i += 1
+        if(i == 50000):
             break
+
+
